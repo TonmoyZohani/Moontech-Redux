@@ -12,7 +12,15 @@ const productReduer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       if (selectedProduct) {
-        return state;
+        const newCart = state.cart.filter(
+          (product) => product._id !== selectedProduct._id
+        );
+        selectedProduct.quantity += 1;
+
+        return {
+          ...state,
+          cart:[...newCart,selectedProduct],
+        };
       }
 
       return {
@@ -21,7 +29,7 @@ const productReduer = (state = initialState, action) => {
           ...state.cart,
           {
             ...action.payload,
-            quantity: action.payload.quantity ? action.payload.quantity + 1 : 1,
+            quantity: 1,
           },
         ],
       };
