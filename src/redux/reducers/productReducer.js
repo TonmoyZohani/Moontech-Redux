@@ -19,7 +19,7 @@ const productReduer = (state = initialState, action) => {
 
         return {
           ...state,
-          cart:[...newCart,selectedProduct],
+          cart: [...newCart, selectedProduct],
         };
       }
 
@@ -34,6 +34,18 @@ const productReduer = (state = initialState, action) => {
         ],
       };
     case REMOVE_FROM_CART:
+      if (selectedProduct.quantity>1) {
+        const newCart = state.cart.filter(
+          (product) => product._id !== selectedProduct._id
+        );
+        selectedProduct.quantity -= 1;
+
+        return {
+          ...state,
+          cart: [...newCart, selectedProduct],
+        };
+      }
+
       return {
         ...state,
         cart: state.cart.filter(
