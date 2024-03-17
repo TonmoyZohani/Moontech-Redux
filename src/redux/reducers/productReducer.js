@@ -12,7 +12,10 @@ const productReduer = (state = initialState, action) => {
         cart :[...state.cart,action.payload]
       };
     case REMOVE_FROM_CART:
-      return {};
+      return {
+        ...state,
+        cart:state.cart.filter((product)=>product._id!==action.payload._id)
+      };
     default:
       return state;
   }
